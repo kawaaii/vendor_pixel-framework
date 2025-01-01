@@ -112,7 +112,6 @@ import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy;
 import com.android.systemui.statusbar.phone.StatusBarTouchableRegionManager;
 import com.android.systemui.statusbar.policy.BatteryController;
-import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.ExtensionController;
@@ -121,7 +120,6 @@ import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.window.StatusBarWindowController;
 import com.android.systemui.statusbar.window.StatusBarWindowStateController;
-import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.WallpaperController;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 import com.android.systemui.util.concurrency.MessageRouter;
@@ -268,13 +266,11 @@ public class CentralSurfacesGoogle extends CentralSurfacesImpl {
             AlternateBouncerInteractor alternateBouncerInteractor,
             UserTracker userTracker,
             Provider<FingerprintManager> fingerprintManager,
-            TunerService tunerService,
             ActivityStarter activityStarter,
             BrightnessMirrorShowingInteractor brightnessMirrorShowingInteractor,
             GlanceableHubContainerController glanceableHubContainerController,
             EmergencyGestureIntentFactory emergencyGestureIntentFactory,
             ViewCaptureAwareWindowManager viewCaptureAwareWindowManager,
-            BurnInProtectionController burnInProtectionController,
             Optional<ReverseChargingViewController> reverseChargingViewControllerOptional,
             WallpaperNotifier wallpaperNotifier,
             SmartSpaceController smartSpaceController,
@@ -379,13 +375,11 @@ public class CentralSurfacesGoogle extends CentralSurfacesImpl {
                 alternateBouncerInteractor,
                 userTracker,
                 fingerprintManager,
-                tunerService,
                 activityStarter,
                 brightnessMirrorShowingInteractor,
                 glanceableHubContainerController,
                 emergencyGestureIntentFactory,
-                viewCaptureAwareWindowManager,
-                burnInProtectionController);
+                viewCaptureAwareWindowManager);
         mContext = context;
         mBatteryStateChangeCallback =
                 new BatteryController.BatteryStateChangeCallback() {

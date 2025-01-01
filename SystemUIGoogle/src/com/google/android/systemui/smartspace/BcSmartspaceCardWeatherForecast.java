@@ -103,7 +103,7 @@ public class BcSmartspaceCardWeatherForecast extends BcSmartspaceCardSecondary {
         boolean isWeatherEnabled =
                 Settings.Secure.getIntForUser(
                                 getContext().getContentResolver(),
-                                Settings.Secure.LOCKSCREEN_SMARTSPACE_ENABLED,
+                                Settings.Secure.LOCK_SCREEN_WEATHER_ENABLED,
                                 1,
                                 UserHandle.USER_CURRENT)
                         != 0;

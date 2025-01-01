@@ -31,6 +31,7 @@ import com.android.systemui.accessibility.SystemActionsModule;
 import com.android.systemui.accessibility.data.repository.AccessibilityRepositoryModule;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.controls.controller.ControlsTileResourceConfiguration;
+import com.android.systemui.custom.CustomModule;
 import com.android.systemui.dagger.GlobalRootComponent;
 import com.android.systemui.dagger.SysUIComponent;
 import com.android.systemui.dagger.SysUISingleton;
@@ -39,7 +40,6 @@ import com.android.systemui.dock.DockManager;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.keyguard.ui.view.layout.blueprints.KeyguardBlueprintModule;
 import com.android.systemui.keyguard.ui.view.layout.sections.KeyguardSectionsModule;
-import com.android.systemui.lineage.LineageModule;
 import com.android.systemui.media.dagger.MediaModule;
 import com.android.systemui.media.muteawait.MediaMuteAwaitConnectionCli;
 import com.android.systemui.media.nearby.NearbyMediaDevicesManager;
@@ -147,7 +147,7 @@ import javax.inject.Named;
             AssistModule.class,
             ColumbusModule.class,
             SystemUIGooglePolicyModule.class,
-            LineageModule.class
+            CustomModule.class
         })
 public abstract class SystemUIGoogleModule {
 
