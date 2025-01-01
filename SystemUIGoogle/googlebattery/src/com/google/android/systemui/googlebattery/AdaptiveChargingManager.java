@@ -18,22 +18,12 @@
 package com.google.android.systemui.googlebattery;
 
 import android.content.Context;
-import android.os.Binder;
-import android.os.IBinder;
 import android.os.LocaleList;
-import android.os.ParcelFormatException;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import java.util.Locale;
-import java.util.NoSuchElementException;
-
-import vendor.google.google_battery.ChargingStage;
-import vendor.google.google_battery.IGoogleBattery;
 
 public class AdaptiveChargingManager {
     private static final boolean DEBUG = false;
@@ -44,7 +34,9 @@ public class AdaptiveChargingManager {
 
     public AdaptiveChargingManager(Context context) {
         mContext = context;
-        mHasSystemFeature = mContext.getPackageManager().hasSystemFeature("com.google.android.feature.ADAPTIVE_CHARGING");
+        mHasSystemFeature =
+                mContext.getPackageManager()
+                        .hasSystemFeature("com.google.android.feature.ADAPTIVE_CHARGING");
     }
 
     public interface AdaptiveChargingStatusReceiver {
@@ -59,7 +51,11 @@ public class AdaptiveChargingManager {
     }
 
     public String formatTimeToFull(long j) {
-        return DateFormat.format(DateFormat.getBestDateTimePattern(getLocale(), DateFormat.is24HourFormat(mContext) ? "Hm" : "hma"), j).toString();
+        return DateFormat.format(
+                        DateFormat.getBestDateTimePattern(
+                                getLocale(), DateFormat.is24HourFormat(mContext) ? "Hm" : "hma"),
+                        j)
+                .toString();
     }
 
     public boolean hasAdaptiveChargingFeature() {
@@ -95,7 +91,7 @@ public class AdaptiveChargingManager {
     }
 
     public static boolean isStageActiveOrEnabled(String stage) {
-       return isStageActive(stage) || isStageEnabled(stage);
+        return isStageActive(stage) || isStageEnabled(stage);
     }
 
     public static boolean isActive(String state, int seconds) {
@@ -106,6 +102,5 @@ public class AdaptiveChargingManager {
         return false;
     }
 
-    public void queryStatus(final AdaptiveChargingStatusReceiver adaptiveChargingStatusReceiver) {
-    }
+    public void queryStatus(final AdaptiveChargingStatusReceiver adaptiveChargingStatusReceiver) {}
 }

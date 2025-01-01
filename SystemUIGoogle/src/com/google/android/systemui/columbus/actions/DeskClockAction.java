@@ -47,50 +47,56 @@ public abstract class DeskClockAction extends Action {
     private final IUserSwitchObserver userSwitchCallback;
 
     public static final class Companion {
-        private Companion() {
-        }
+        private Companion() {}
 
         public Companion(DefaultConstructorMarker defaultConstructorMarker) {
             this();
         }
     }
 
-    public DeskClockAction(Context context, SilenceAlertsDisabled silenceAlertsDisabled, IActivityManager iActivityManager) {
+    public DeskClockAction(
+            Context context,
+            SilenceAlertsDisabled silenceAlertsDisabled,
+            IActivityManager iActivityManager) {
         super(context, null, 2, null);
         this.silenceAlertsDisabled = silenceAlertsDisabled;
 
-        this.gateListener = new Gate.Listener() {
-            @Override
-            public void onGateChanged(Gate gate) {
-                updateBroadcastReceiver();
-            }
-        };
-
-        this.alertReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent != null) {
-                    String action = intent.getAction();
-                    if (Intrinsics.areEqual(action, getAlertAction())) {
-                        alertFiring = true;
-                    } else if (Intrinsics.areEqual(action, getDoneAction())) {
-                        alertFiring = false;
+        this.gateListener =
+                new Gate.Listener() {
+                    @Override
+                    public void onGateChanged(Gate gate) {
+                        updateBroadcastReceiver();
                     }
-                }
-                updateAvailable();
-            }
-        };
+                };
 
-        this.userSwitchCallback = new SynchronousUserSwitchObserver() {
-            @Override
-            public void onUserSwitching(int userId) throws RemoteException {
-                updateBroadcastReceiver();
-            }
-        };
+        this.alertReceiver =
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        if (intent != null) {
+                            String action = intent.getAction();
+                            if (Intrinsics.areEqual(action, getAlertAction())) {
+                                alertFiring = true;
+                            } else if (Intrinsics.areEqual(action, getDoneAction())) {
+                                alertFiring = false;
+                            }
+                        }
+                        updateAvailable();
+                    }
+                };
+
+        this.userSwitchCallback =
+                new SynchronousUserSwitchObserver() {
+                    @Override
+                    public void onUserSwitching(int userId) throws RemoteException {
+                        updateBroadcastReceiver();
+                    }
+                };
 
         silenceAlertsDisabled.registerListener(gateListener);
         try {
-            iActivityManager.registerUserSwitchObserver(userSwitchCallback, "Columbus/DeskClockAct");
+            iActivityManager.registerUserSwitchObserver(
+                    userSwitchCallback, "Columbus/DeskClockAct");
         } catch (RemoteException e) {
             Log.e("Columbus/DeskClockAct", "Failed to register user switch observer", e);
         }
@@ -113,7 +119,14 @@ public abstract class DeskClockAction extends Action {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(getAlertAction());
             intentFilter.addAction(getDoneAction());
-            getContext().registerReceiverAsUser(alertReceiver, UserHandle.CURRENT, intentFilter, "com.android.systemui.permission.SEND_ALERT_BROADCASTS", null, Context.RECEIVER_EXPORTED);
+            getContext()
+                    .registerReceiverAsUser(
+                            alertReceiver,
+                            UserHandle.CURRENT,
+                            intentFilter,
+                            "com.android.systemui.permission.SEND_ALERT_BROADCASTS",
+                            null,
+                            Context.RECEIVER_EXPORTED);
             receiverRegistered = true;
         }
 
@@ -132,7 +145,9 @@ public abstract class DeskClockAction extends Action {
         ActivityOptions options = ActivityOptions.makeBasic();
         options.setDisallowEnterPictureInPictureWhileLaunching(true);
         dismissIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        dismissIntent.putExtra("android.intent.extra.REFERRER", Uri.parse("android-app://" + getContext().getPackageName()));
+        dismissIntent.putExtra(
+                "android.intent.extra.REFERRER",
+                Uri.parse("android-app://" + getContext().getPackageName()));
 
         try {
             getContext().startActivityAsUser(dismissIntent, options.toBundle(), UserHandle.CURRENT);
@@ -149,4 +164,3 @@ public abstract class DeskClockAction extends Action {
         return super.toString() + " [receiverRegistered -> " + receiverRegistered + ']';
     }
 }
-

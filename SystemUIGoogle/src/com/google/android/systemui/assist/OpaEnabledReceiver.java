@@ -18,27 +18,23 @@ package com.google.android.systemui.assist;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Log;
 
-import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
+
+import lineageos.providers.LineageSettings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
-
-import lineageos.providers.LineageSettings;
 
 @SysUISingleton
 public class OpaEnabledReceiver {
@@ -56,7 +52,7 @@ public class OpaEnabledReceiver {
 
     @Inject
     public OpaEnabledReceiver(
-            Context context, 
+            Context context,
             @Main Executor fgExecutor,
             @Background Executor bgExecutor,
             OpaEnabledSettings opaEnabledSettings) {
@@ -72,7 +68,8 @@ public class OpaEnabledReceiver {
 
     public void addOpaEnabledListener(OpaEnabledListener opaEnabledListener) {
         mListeners.add(opaEnabledListener);
-        opaEnabledListener.onOpaEnabledReceived(mContext, mIsOpaEligible, mIsAGSAAssistant, mIsOpaEnabled, mIsLongPressHomeEnabled);
+        opaEnabledListener.onOpaEnabledReceived(
+                mContext, mIsOpaEligible, mIsAGSAAssistant, mIsOpaEnabled, mIsLongPressHomeEnabled);
     }
 
     public void onUserSwitching(int i) {
@@ -82,15 +79,16 @@ public class OpaEnabledReceiver {
     }
 
     private void updateOpaEnabledState(final boolean z) {
-        mBgExecutor.execute(() -> {
-            mIsOpaEligible = mOpaEnabledSettings.isOpaEligible();
-            mIsAGSAAssistant = mOpaEnabledSettings.isAgsaAssistant();
-            mIsOpaEnabled = mOpaEnabledSettings.isOpaEnabled();
-            mIsLongPressHomeEnabled = mOpaEnabledSettings.isLongPressHomeEnabled();
-            if (z) {
-                mFgExecutor.execute(() -> dispatchOpaEnabledState(mContext));
-            }
-        });
+        mBgExecutor.execute(
+                () -> {
+                    mIsOpaEligible = mOpaEnabledSettings.isOpaEligible();
+                    mIsAGSAAssistant = mOpaEnabledSettings.isAgsaAssistant();
+                    mIsOpaEnabled = mOpaEnabledSettings.isOpaEnabled();
+                    mIsLongPressHomeEnabled = mOpaEnabledSettings.isLongPressHomeEnabled();
+                    if (z) {
+                        mFgExecutor.execute(() -> dispatchOpaEnabledState(mContext));
+                    }
+                });
     }
 
     public void dispatchOpaEnabledState() {
@@ -98,15 +96,31 @@ public class OpaEnabledReceiver {
     }
 
     private void dispatchOpaEnabledState(Context context) {
-        Log.i("OpaEnabledReceiver", "Dispatching OPA eligble = " + mIsOpaEligible + "; AGSA = " + mIsAGSAAssistant + "; OPA enabled = " + mIsOpaEnabled);
+        Log.i(
+                "OpaEnabledReceiver",
+                "Dispatching OPA eligble = "
+                        + mIsOpaEligible
+                        + "; AGSA = "
+                        + mIsAGSAAssistant
+                        + "; OPA enabled = "
+                        + mIsOpaEnabled);
         for (int i = 0; i < mListeners.size(); i++) {
-            mListeners.get(i).onOpaEnabledReceived(context, mIsOpaEligible, mIsAGSAAssistant, mIsOpaEnabled, mIsLongPressHomeEnabled);
+            mListeners
+                    .get(i)
+                    .onOpaEnabledReceived(
+                            context,
+                            mIsOpaEligible,
+                            mIsAGSAAssistant,
+                            mIsOpaEnabled,
+                            mIsLongPressHomeEnabled);
         }
     }
 
     private void registerContentObserver() {
-        mContentResolver.registerContentObserver(LineageSettings.System.getUriFor(
-                LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION), false, mContentObserver,
+        mContentResolver.registerContentObserver(
+                LineageSettings.System.getUriFor(LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION),
+                false,
+                mContentObserver,
                 UserHandle.USER_ALL);
     }
 

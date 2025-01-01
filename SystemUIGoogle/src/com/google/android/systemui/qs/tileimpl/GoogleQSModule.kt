@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.android.systemui.qs.tileimpl;
+package com.google.android.systemui.qs.tileimpl
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
-import com.google.android.systemui.qs.tiles.BatterySaverTileGoogle;
-import com.google.android.systemui.qs.tiles.ReverseChargingTile;
+import com.google.android.systemui.qs.tiles.BatterySaverTileGoogle
+import com.google.android.systemui.qs.tiles.ReverseChargingTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -27,15 +27,15 @@ import dagger.multibindings.StringKey
 @Module
 interface GoogleQSModule {
 
-    /** Inject ReverseChargingTile into tileMap in QSModule */
-    @Binds
-    @IntoMap
-    @StringKey(ReverseChargingTile.TILE_SPEC)
-    fun bindReverseChargingTile(reverseChargingTile: ReverseChargingTile): QSTileImpl<*>
+  /** Inject ReverseChargingTile into tileMap in QSModule */
+  @Binds
+  @IntoMap
+  @StringKey(ReverseChargingTile.TILE_SPEC)
+  fun bindReverseChargingTile(reverseChargingTile: ReverseChargingTile): QSTileImpl<*>
 
-    /** Inject BatterySaverTileGoogle into tileMap in QSModule */
-    @Binds
-    @IntoMap
-    @StringKey(BatterySaverTileGoogle.TILE_SPEC)
-    fun bindBatterySaverTileGoogle(batterySaverTileGoogle: BatterySaverTileGoogle): QSTileImpl<*>
+  /** Inject BatterySaverTileGoogle into tileMap in QSModule */
+  @Binds
+  @IntoMap
+  @StringKey(BatterySaverTileGoogle.TILE_SPEC)
+  fun bindBatterySaverTileGoogle(batterySaverTileGoogle: BatterySaverTileGoogle): QSTileImpl<*>
 }

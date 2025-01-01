@@ -20,5 +20,5 @@ import android.content.Context
 import com.android.systemui.SystemUIAppComponentFactoryBase
 
 public class SystemUIGoogleAppComponentFactory : SystemUIAppComponentFactoryBase() {
-    override fun createSystemUIInitializer(context: Context) = SystemUIGoogleInitializer(context)
+  override fun createSystemUIInitializer(context: Context) = SystemUIGoogleInitializer(context)
 }

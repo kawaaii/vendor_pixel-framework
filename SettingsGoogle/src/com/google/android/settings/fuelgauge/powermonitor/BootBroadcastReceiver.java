@@ -12,7 +12,11 @@ public final class BootBroadcastReceiver extends BroadcastReceiver {
 
     private void setPowerMonitorReceiverEnabled(Context context) {
         Log.d("BootBroadcastReceiver", "Enable power monitor broadcast receiver.");
-        context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, (Class<?>) PowerMonitorBroadcastReceiver.class), 1, 1);
+        context.getPackageManager()
+                .setComponentEnabledSetting(
+                        new ComponentName(context, (Class<?>) PowerMonitorBroadcastReceiver.class),
+                        1,
+                        1);
     }
 
     @Override

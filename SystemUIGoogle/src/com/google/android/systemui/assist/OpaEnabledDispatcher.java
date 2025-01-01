@@ -17,26 +17,21 @@
 package com.google.android.systemui.assist;
 
 import android.content.Context;
-import android.os.UserManager;
-import android.view.View;
 
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
 
-import java.util.ArrayList;
+import dagger.Lazy;
 
 import javax.inject.Inject;
-
-import dagger.Lazy;
 
 @SysUISingleton
 public class OpaEnabledDispatcher implements OpaEnabledListener {
 
     @Inject
-    public OpaEnabledDispatcher(Lazy<CentralSurfaces> centralSurfacesLazy) {
-    }
+    public OpaEnabledDispatcher(Lazy<CentralSurfaces> centralSurfacesLazy) {}
 
     @Override
-    public void onOpaEnabledReceived(Context context, boolean z, boolean z2, boolean z3, boolean z4) {
-    }
+    public void onOpaEnabledReceived(
+            Context context, boolean z, boolean z2, boolean z3, boolean z4) {}
 }

@@ -16,13 +16,10 @@
 
 package com.google.android.systemui.smartspace
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.pm.PackageManager
 import com.android.systemui.CoreStartable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.flags.FeatureFlags
-import com.android.systemui.flags.Flags
 import com.android.systemui.util.InitializationChecker
 import javax.inject.Inject
 
@@ -36,15 +33,15 @@ constructor(
     private val mediaController: KeyguardMediaViewController,
     private val initializationChecker: InitializationChecker
 ) : CoreStartable {
-    override fun start() {
-        when {
-            !initializationChecker.initializeComponents() -> {
-                return
-            }
-            initializationChecker.initializeComponents() -> {
-                zenController.init()
-                mediaController.init()
-            }
-        }
+  override fun start() {
+    when {
+      !initializationChecker.initializeComponents() -> {
+        return
+      }
+      initializationChecker.initializeComponents() -> {
+        zenController.init()
+        mediaController.init()
+      }
     }
+  }
 }

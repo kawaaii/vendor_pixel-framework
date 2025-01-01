@@ -18,20 +18,19 @@ package com.google.android.systemui.columbus.dagger;
 
 import android.app.Service;
 
-import org.pixelexperience.systemui.columbus.ColumbusTargetRequestServiceWrapper;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 
+import org.pixelexperience.systemui.columbus.ColumbusTargetRequestServiceWrapper;
+
 @Module
 public abstract class ColumbusBinderModule {
-    /**
-     * Inject into ColumbusTargetRequestServiceWrapper.
-     */
+    /** Inject into ColumbusTargetRequestServiceWrapper. */
     @Binds
     @IntoMap
     @ClassKey(ColumbusTargetRequestServiceWrapper.class)
-    public abstract Service bindColumbusTargetRequestService(ColumbusTargetRequestServiceWrapper activity);
+    public abstract Service bindColumbusTargetRequestService(
+            ColumbusTargetRequestServiceWrapper activity);
 }

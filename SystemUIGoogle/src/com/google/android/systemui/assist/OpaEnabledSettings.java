@@ -23,9 +23,9 @@ import android.content.Context;
 
 import com.android.systemui.dagger.SysUISingleton;
 
-import javax.inject.Inject;
-
 import lineageos.providers.LineageSettings;
+
+import javax.inject.Inject;
 
 @SysUISingleton
 public class OpaEnabledSettings {
@@ -40,38 +40,44 @@ public class OpaEnabledSettings {
         mContext = context;
         mContentResolver = context.getContentResolver();
 
-        mHomeLongPressAction = Action.fromIntSafe(mContext.getResources().getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnHomeBehavior));
+        mHomeLongPressAction =
+                Action.fromIntSafe(
+                        mContext.getResources()
+                                .getInteger(
+                                        org.lineageos.platform.internal.R.integer
+                                                .config_longPressOnHomeBehavior));
         if (mHomeLongPressAction.ordinal() > Action.SLEEP.ordinal()) {
             mHomeLongPressAction = Action.NOTHING;
         }
-        mHomeLongPressAction = Action.fromSettings(mContentResolver,
-                LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
-                mHomeLongPressAction);
+        mHomeLongPressAction =
+                Action.fromSettings(
+                        mContentResolver,
+                        LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
+                        mHomeLongPressAction);
     }
 
     public boolean isOpaEligible() {
         return true;
     }
 
-    public void setOpaEligible(boolean z) {
-    }
+    public void setOpaEligible(boolean z) {}
 
     public boolean isOpaEnabled() {
         return true;
     }
 
-    public void setOpaEnabled(boolean z) {
-    }
+    public void setOpaEnabled(boolean z) {}
 
     public boolean isAgsaAssistant() {
         return OpaUtils.isAGSACurrentAssistant(mContext);
     }
 
     public boolean isLongPressHomeEnabled() {
-        mHomeLongPressAction = Action.fromSettings(mContentResolver,
-                LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
-                mHomeLongPressAction);
+        mHomeLongPressAction =
+                Action.fromSettings(
+                        mContentResolver,
+                        LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
+                        mHomeLongPressAction);
         return mHomeLongPressAction == Action.SEARCH;
     }
 }

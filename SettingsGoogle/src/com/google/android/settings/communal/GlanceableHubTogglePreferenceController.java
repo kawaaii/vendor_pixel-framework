@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.os.UserHandle;
 import android.provider.Settings;
+
 import androidx.preference.Preference;
+
 import com.android.settings.R;
 import com.android.settings.core.TogglePreferenceController;
 import com.android.settingslib.RestrictedLockUtils;
 import com.android.settingslib.RestrictedLockUtilsInternal;
 import com.android.settingslib.RestrictedSwitchPreference;
-import com.android.settingslib.core.AbstractPreferenceController;
 
 public class GlanceableHubTogglePreferenceController extends TogglePreferenceController {
     public GlanceableHubTogglePreferenceController(Context context, String str) {
@@ -18,7 +19,9 @@ public class GlanceableHubTogglePreferenceController extends TogglePreferenceCon
     }
 
     private void disablePreferenceIfManaged(RestrictedSwitchPreference restrictedSwitchPreference) {
-        RestrictedLockUtils.EnforcedAdmin checkIfKeyguardFeaturesDisabled = RestrictedLockUtilsInternal.checkIfKeyguardFeaturesDisabled(mContext, 1, UserHandle.myUserId());
+        RestrictedLockUtils.EnforcedAdmin checkIfKeyguardFeaturesDisabled =
+                RestrictedLockUtilsInternal.checkIfKeyguardFeaturesDisabled(
+                        mContext, 1, UserHandle.myUserId());
         if (checkIfKeyguardFeaturesDisabled != null) {
             restrictedSwitchPreference.setDisabledByAdmin(checkIfKeyguardFeaturesDisabled);
             restrictedSwitchPreference.setChecked(false);
@@ -47,7 +50,8 @@ public class GlanceableHubTogglePreferenceController extends TogglePreferenceCon
 
     public boolean isChecked() {
         boolean z = true;
-        if (Settings.Secure.getInt(mContext.getContentResolver(), "glanceable_hub_enabled", 1) != 1) {
+        if (Settings.Secure.getInt(mContext.getContentResolver(), "glanceable_hub_enabled", 1)
+                != 1) {
             z = false;
         }
         return z;

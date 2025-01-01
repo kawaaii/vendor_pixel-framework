@@ -11,8 +11,10 @@ import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.crdroid.Utils;
 import com.android.settings.core.BasePreferenceController;
@@ -21,87 +23,89 @@ import com.android.settingslib.core.lifecycle.events.OnPause;
 import com.android.settingslib.core.lifecycle.events.OnResume;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
 
-public class BatterySaverModePreferenceController extends BasePreferenceController implements SelectorWithWidgetPreference.OnClickListener, LifecycleObserver, OnResume, OnPause {
+public class BatterySaverModePreferenceController extends BasePreferenceController
+        implements SelectorWithWidgetPreference.OnClickListener,
+                LifecycleObserver,
+                OnResume,
+                OnPause {
     private static final String TAG = "BatterySaverModePreferenceController";
-    @VisibleForTesting
-    SelectorWithWidgetPreference mBasicPreference;
+    @VisibleForTesting SelectorWithWidgetPreference mBasicPreference;
     private final ContentObserver mContentObserver;
-    @VisibleForTesting
-    boolean mCurrentBatterySaverMode;
-    @VisibleForTesting
-    SelectorWithWidgetPreference mExtremePreference;
+    @VisibleForTesting boolean mCurrentBatterySaverMode;
+    @VisibleForTesting SelectorWithWidgetPreference mExtremePreference;
     private HandlerThread mHandlerThread;
-    @VisibleForTesting
-    boolean mIsFlipendoAggressiveMode;
-    @VisibleForTesting
-    boolean mIsFlipendoEnabled;
+    @VisibleForTesting boolean mIsFlipendoAggressiveMode;
+    @VisibleForTesting boolean mIsFlipendoEnabled;
 
-    @Override 
+    @Override
     public int getAvailabilityStatus() {
-        boolean available = Utils.isPackageInstalled(mContext, "com.google.android.flipendo", false);
+        boolean available =
+                Utils.isPackageInstalled(mContext, "com.google.android.flipendo", false);
         return available ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
-    @Override 
+    @Override
     public Class getBackgroundWorkerClass() {
         return super.getBackgroundWorkerClass();
     }
 
-    @Override 
+    @Override
     public IntentFilter getIntentFilter() {
         return super.getIntentFilter();
     }
 
-    @Override 
+    @Override
     public int getSliceHighlightMenuRes() {
         return super.getSliceHighlightMenuRes();
     }
 
-    @Override 
+    @Override
     public boolean hasAsyncUpdate() {
         return super.hasAsyncUpdate();
     }
 
-    @Override 
+    @Override
     public boolean isPublicSlice() {
         return super.isPublicSlice();
     }
 
-    @Override 
+    @Override
     public boolean isSliceable() {
         return super.isSliceable();
     }
 
-    @Override 
+    @Override
     public boolean useDynamicSliceSummary() {
         return super.useDynamicSliceSummary();
     }
 
     public BatterySaverModePreferenceController(Context context, String str) {
         super(context, str);
-        mContentObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
-            @Override 
-            public void onChange(boolean z) {
-                refreshFlipendoStates();
-                if (mIsFlipendoAggressiveMode) {
-                    return;
-                }
-                updateSaverModeSelection(!mIsFlipendoEnabled);
-            }
-        };
+        mContentObserver =
+                new ContentObserver(new Handler(Looper.getMainLooper())) {
+                    @Override
+                    public void onChange(boolean z) {
+                        refreshFlipendoStates();
+                        if (mIsFlipendoAggressiveMode) {
+                            return;
+                        }
+                        updateSaverModeSelection(!mIsFlipendoEnabled);
+                    }
+                };
     }
 
     @Override
     public void displayPreference(PreferenceScreen preferenceScreen) {
         super.displayPreference(preferenceScreen);
-        PreferenceCategory preferenceCategory = (PreferenceCategory) preferenceScreen.findPreference(getPreferenceKey());
+        PreferenceCategory preferenceCategory =
+                (PreferenceCategory) preferenceScreen.findPreference(getPreferenceKey());
         if (preferenceCategory != null) {
             refreshFlipendoStates();
             initRadioButton(preferenceCategory);
         }
     }
 
-    @Override 
+    @Override
     public void onRadioButtonClicked(SelectorWithWidgetPreference selectorWithWidgetPreference) {
         String key = selectorWithWidgetPreference.getKey();
         key.hashCode();
@@ -115,11 +119,13 @@ public class BatterySaverModePreferenceController extends BasePreferenceControll
         }
     }
 
-    @Override 
+    @Override
     public void onResume() {
         try {
             boolean z = false;
-            mContext.getContentResolver().registerContentObserver(FlipendoUtils.FLIPENDO_ENABLED_OBSERVABLE_URI, false, mContentObserver);
+            mContext.getContentResolver()
+                    .registerContentObserver(
+                            FlipendoUtils.FLIPENDO_ENABLED_OBSERVABLE_URI, false, mContentObserver);
             SelectorWithWidgetPreference selectorWithWidgetPreference = mBasicPreference;
             if (selectorWithWidgetPreference != null) {
                 mCurrentBatterySaverMode = selectorWithWidgetPreference.isChecked();
@@ -134,11 +140,13 @@ public class BatterySaverModePreferenceController extends BasePreferenceControll
         }
     }
 
-    @Override 
+    @Override
     public void onPause() {
         mContext.getContentResolver().unregisterContentObserver(mContentObserver);
-        if (mCurrentBatterySaverMode == mBasicPreference.isChecked() || 
-            (!mIsFlipendoAggressiveMode && mIsFlipendoEnabled && mExtremePreference.isChecked())) {
+        if (mCurrentBatterySaverMode == mBasicPreference.isChecked()
+                || (!mIsFlipendoAggressiveMode
+                        && mIsFlipendoEnabled
+                        && mExtremePreference.isChecked())) {
             return;
         }
         mHandlerThread = new HandlerThread(TAG);
@@ -151,21 +159,26 @@ public class BatterySaverModePreferenceController extends BasePreferenceControll
     }
 
     private void initRadioButton(PreferenceCategory preferenceCategory) {
-        mBasicPreference = (SelectorWithWidgetPreference) preferenceCategory.findPreference("basic_battery_saver_entry");
+        mBasicPreference =
+                (SelectorWithWidgetPreference)
+                        preferenceCategory.findPreference("basic_battery_saver_entry");
         if (mBasicPreference != null) {
             mBasicPreference.setExtraWidgetOnClickListener(null);
             mBasicPreference.setOnClickListener(this);
             mBasicPreference.setChecked(!mIsFlipendoAggressiveMode);
         }
 
-        mExtremePreference = (SelectorWithWidgetPreference) preferenceCategory.findPreference("extreme_battery_saver_entry");
+        mExtremePreference =
+                (SelectorWithWidgetPreference)
+                        preferenceCategory.findPreference("extreme_battery_saver_entry");
         if (mExtremePreference != null) {
-            mExtremePreference.setExtraWidgetOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    launchFlipendo();
-                }
-            });
+            mExtremePreference.setExtraWidgetOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            launchFlipendo();
+                        }
+                    });
             mExtremePreference.setOnClickListener(this);
             mExtremePreference.setChecked(mIsFlipendoAggressiveMode);
         }
@@ -190,7 +203,12 @@ public class BatterySaverModePreferenceController extends BasePreferenceControll
         Bundle bundle = new Bundle();
         bundle.putInt("update_flipendo_mode", i);
         try {
-            context.getContentResolver().call(FlipendoUtils.FLIPENDO_STATE_AUTHORITY, "update_flipendo_mode_method", (String) null, bundle);
+            context.getContentResolver()
+                    .call(
+                            FlipendoUtils.FLIPENDO_STATE_AUTHORITY,
+                            "update_flipendo_mode_method",
+                            (String) null,
+                            bundle);
         } catch (Exception e) {
             Log.e(TAG, "updateBatterySaverMode() failed", e);
         }

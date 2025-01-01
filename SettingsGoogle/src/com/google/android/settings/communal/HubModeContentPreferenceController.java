@@ -3,9 +3,9 @@ package com.google.android.settings.communal;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.provider.Settings;
+
 import com.android.settings.R;
 import com.android.settings.core.TogglePreferenceController;
-import com.android.settingslib.core.AbstractPreferenceController;
 
 public class HubModeContentPreferenceController extends TogglePreferenceController {
     public static final String GLANCEABLE_HUB_CONTENT_SETTING = "glanceable_hub_content_setting";
@@ -40,14 +40,20 @@ public class HubModeContentPreferenceController extends TogglePreferenceControll
 
     public boolean isChecked() {
         boolean z = true;
-        if ((Settings.Secure.getInt(mContext.getContentResolver(), GLANCEABLE_HUB_CONTENT_SETTING, getDefaultWidgetCategories()) & 1) == 0) {
+        if ((Settings.Secure.getInt(
+                                mContext.getContentResolver(),
+                                GLANCEABLE_HUB_CONTENT_SETTING,
+                                getDefaultWidgetCategories())
+                        & 1)
+                == 0) {
             z = false;
         }
         return z;
     }
 
     public boolean setChecked(boolean z) {
-        Settings.Secure.putInt(mContext.getContentResolver(), GLANCEABLE_HUB_CONTENT_SETTING, (z ? 1 : 0) | 2);
+        Settings.Secure.putInt(
+                mContext.getContentResolver(), GLANCEABLE_HUB_CONTENT_SETTING, (z ? 1 : 0) | 2);
         return true;
     }
 
