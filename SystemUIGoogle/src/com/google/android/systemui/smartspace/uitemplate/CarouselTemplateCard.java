@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Constraints;
 
+import com.android.systemui.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.BcSmartSpaceUtil;
 import com.google.android.systemui.smartspace.BcSmartspaceCardSecondary;
@@ -119,7 +119,7 @@ public class CarouselTemplateCard extends BcSmartspaceCardSecondary {
                             carouselItems.stream()
                                     .filter(
                                             new Predicate() { // from class:
-                                                // com.google.android.systemui.smartspace.uitemplate.CarouselTemplateCard$$ExternalSyntheticLambda0
+                                                              // com.google.android.systemui.smartspace.uitemplate.CarouselTemplateCard$$ExternalSyntheticLambda0
                                                 @Override // java.util.function.Predicate
                                                 public final boolean test(Object obj) {
                                                     boolean z;

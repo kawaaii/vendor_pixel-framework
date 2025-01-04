@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.app.animation.Interpolators;
 import com.android.launcher3.icons.GraphicsUtils;
+import com.android.systemui.R;
+import com.android.systemui.animation.Interpolators;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardMetadataLoggingInfo;
@@ -377,7 +377,7 @@ public class BcSmartspaceCard extends ConstraintLayout {
                 "BcSmartspaceCard",
                 String.format(
                         "setFormattedContentDescription: textView=%s, text=%s, iconDescription=%s,"
-                                + " contentDescription=%s",
+                            + " contentDescription=%s",
                         objArr));
         textView.setContentDescription(string);
     }

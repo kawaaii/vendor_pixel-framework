@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.android.systemui.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
 

@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 
-import com.android.systemui.res.R;
+import com.android.systemui.R;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class IcuDateTextView extends DoubleShadowTextView {
         this.mTicker = this::onTimeTick;
         this.mIntentReceiver =
                 new BroadcastReceiver() { // from class:
-                    // com.google.android.systemui.smartspace.IcuDateTextView.1
+                                          // com.google.android.systemui.smartspace.IcuDateTextView.1
                     @Override // android.content.BroadcastReceiver
                     public void onReceive(Context context2, Intent intent) {
                         IcuDateTextView.this.onTimeChanged(

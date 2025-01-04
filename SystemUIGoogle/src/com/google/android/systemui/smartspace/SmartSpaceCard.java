@@ -26,7 +26,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.android.systemui.res.R;
+import com.android.systemui.R;
 import com.android.systemui.smartspace.nano.SmartspaceProto;
 
 public final class SmartSpaceCard {
@@ -315,7 +315,7 @@ public final class SmartSpaceCard {
                     strArr[i] = getDurationText(formatParam);
                 }
             }
-            return String.format(str, (Object[]) strArr);
+            return String.format(str, strArr);
         }
         return str;
     }

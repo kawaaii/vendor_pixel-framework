@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
 import com.android.internal.graphics.ColorUtils;
-import com.android.systemui.res.R;
+import com.android.systemui.R;
 
 public class DoubleShadowIconDrawable extends Drawable {
     public int mAmbientShadowRadius;

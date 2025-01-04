@@ -26,8 +26,8 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.android.launcher3.icons.RoundDrawableWrapper;
+import com.android.systemui.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
 
@@ -60,7 +60,7 @@ public class BcSmartspaceCardDoorbell extends BcSmartspaceCardGenericImage {
     }
 
     @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage,
-    // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+              // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
     public final boolean setSmartspaceActions(
             SmartspaceTarget smartspaceTarget,
             BcSmartspaceDataPlugin.SmartspaceEventNotifier smartspaceEventNotifier,
@@ -297,7 +297,7 @@ public class BcSmartspaceCardDoorbell extends BcSmartspaceCardGenericImage {
     }
 
     @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage,
-    // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+              // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
     public final void resetUi() {
         super.resetUi();
         BcSmartspaceTemplateDataUtils.updateVisibility(this.mImageView, 8);

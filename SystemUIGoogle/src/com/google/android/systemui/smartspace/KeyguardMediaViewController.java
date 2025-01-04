@@ -1,5 +1,6 @@
 package com.google.android.systemui.smartspace;
 
+
 import android.app.smartspace.SmartspaceAction;
 import android.app.smartspace.SmartspaceTarget;
 import android.content.ComponentName;
@@ -13,11 +14,11 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.android.systemui.R;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.util.concurrency.DelayableExecutor;

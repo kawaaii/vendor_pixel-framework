@@ -17,9 +17,9 @@ import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 
+import com.android.systemui.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
 import com.android.systemui.plugins.FalsingManager;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLogger;
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
@@ -73,7 +73,7 @@ public final class BcSmartSpaceUtil {
                                     Log.w(
                                             str,
                                             "Cannot notify target interaction smartspace event:"
-                                                    + " event notifier null.");
+                                                + " event notifier null.");
                                 } else {
                                     smartspaceEventNotifier.notifySmartspaceEvent(
                                             new SmartspaceTargetEvent.Builder(1)
@@ -134,7 +134,7 @@ public final class BcSmartSpaceUtil {
                                     Log.w(
                                             str,
                                             "Cannot notify target interaction smartspace event:"
-                                                    + " event notifier null.");
+                                                + " event notifier null.");
                                 } else {
                                     smartspaceEventNotifier.notifySmartspaceEvent(
                                             new SmartspaceTargetEvent.Builder(1)
@@ -213,8 +213,7 @@ public final class BcSmartSpaceUtil {
             this.tag = str;
         }
 
-        @Override // com.android.systemui.plugins.BcSmartspaceDataPlugin.IntentStarter
-        public final void startIntent(View view, Intent intent, boolean z) {
+        public void startIntent(View view, Intent intent, boolean z) {
             try {
                 view.getContext().startActivity(intent);
             } catch (ActivityNotFoundException | NullPointerException | SecurityException e) {
@@ -222,8 +221,7 @@ public final class BcSmartSpaceUtil {
             }
         }
 
-        @Override // com.android.systemui.plugins.BcSmartspaceDataPlugin.IntentStarter
-        public final void startPendingIntent(View view, PendingIntent pendingIntent, boolean z) {
+        public void startPendingIntent(PendingIntent pendingIntent, boolean z) {
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {

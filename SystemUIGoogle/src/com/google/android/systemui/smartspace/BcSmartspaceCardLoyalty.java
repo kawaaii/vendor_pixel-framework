@@ -10,8 +10,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.systemui.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.res.R;
 
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
 
@@ -29,7 +29,7 @@ public class BcSmartspaceCardLoyalty extends BcSmartspaceCardGenericImage {
     }
 
     @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage,
-    // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+              // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
     public final void setTextColor(int i) {
         this.mLoyaltyProgramNameView.setTextColor(i);
         this.mCardPromptView.setTextColor(i);
@@ -44,7 +44,7 @@ public class BcSmartspaceCardLoyalty extends BcSmartspaceCardGenericImage {
     }
 
     @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage,
-    // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+              // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
     public final void resetUi() {
         super.resetUi();
         BcSmartspaceTemplateDataUtils.updateVisibility(this.mImageView, 8);
@@ -60,7 +60,7 @@ public class BcSmartspaceCardLoyalty extends BcSmartspaceCardGenericImage {
     }
 
     @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage,
-    // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+              // com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
     public final boolean setSmartspaceActions(
             SmartspaceTarget smartspaceTarget,
             BcSmartspaceDataPlugin.SmartspaceEventNotifier smartspaceEventNotifier,
