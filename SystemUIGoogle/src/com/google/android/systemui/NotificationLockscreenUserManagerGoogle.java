@@ -19,15 +19,14 @@ package com.google.android.systemui;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.os.Handler;
 import android.os.UserManager;
 
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.SysUISingleton;
-import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
-import com.android.systemui.flags.FeatureFlagsClassic;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.recents.OverviewProxyService;
 import com.android.systemui.settings.UserTracker;
@@ -43,8 +42,6 @@ import com.android.systemui.util.settings.SecureSettings;
 import com.google.android.systemui.smartspace.SmartSpaceController;
 
 import dagger.Lazy;
-
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -69,16 +66,14 @@ public final class NotificationLockscreenUserManagerGoogle
             Lazy<OverviewProxyService> overviewProxyServiceLazy,
             KeyguardManager keyguardManager,
             StatusBarStateController statusBarStateController,
-            @Main Executor mainExecutor,
-            @Background Executor backgroundExecutor,
+            @Main Handler mainHandler,
             DeviceProvisionedController deviceProvisionedController,
             KeyguardStateController keyguardStateController,
+            Lazy<KeyguardBypassController> keyguardBypassController,
+            SmartSpaceController smartSpaceController,
             SecureSettings secureSettings,
             DumpManager dumpManager,
-            LockPatternUtils lockPatternUtils,
-            FeatureFlagsClassic featureFlags,
-            Lazy<KeyguardBypassController> keyguardBypassController,
-            SmartSpaceController smartSpaceController) {
+            LockPatternUtils lockPatternUtils) {
         super(
                 context,
                 broadcastDispatcher,
@@ -91,14 +86,12 @@ public final class NotificationLockscreenUserManagerGoogle
                 overviewProxyServiceLazy,
                 keyguardManager,
                 statusBarStateController,
-                mainExecutor,
-                backgroundExecutor,
+                mainHandler,
                 deviceProvisionedController,
                 keyguardStateController,
                 secureSettings,
                 dumpManager,
-                lockPatternUtils,
-                featureFlags);
+                lockPatternUtils);
         KeyguardStateController.Callback callback =
                 new KeyguardStateController.Callback() {
                     public void onKeyguardShowingChanged() {
@@ -122,7 +115,8 @@ public final class NotificationLockscreenUserManagerGoogle
         if (!((KeyguardBypassController) this.mKeyguardBypassControllerLazy.get())
                 .getBypassEnabled()) {
             if (hideWork
-                    && (isAnyProfilePublicMode() || !this.mKeyguardStateController.isShowing())) {
+                    && (isAnyManagedProfilePublicMode()
+                            || !this.mKeyguardStateController.isShowing())) {
                 hideNotifs = true;
             }
             hideWork = hideNotifs;
